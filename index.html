@@ -386,7 +386,7 @@
                   </a>
                   <div class="class-item-text">
                     <span>Sunday 7:30am - 9:00am</span>
-                    <h2><a href="single.html">Fitness Class Name #1</a></h2>
+                    <h2><a href="single.html">Fitness Class #1 55555555</a></h2>
                     <span>By Justin Daniel</span>,
                     <span>30 minutes</span>
                   </div>
@@ -447,6 +447,7 @@
                   <a href="single.html" class="class-item-thumbnail">
                     <img src="images/img_1.jpg" alt="Image">
                   </a>
+                  
                   <div class="class-item-text">
                     <span>Sunday 7:30am - 9:00am</span>
                     <h2><a href="single.html">Fitness Class Name #1</a></h2>
@@ -501,6 +502,7 @@
                     <span>By Justin Daniel</span>,
                     <span>30 minutes</span>
                   </div>
+                
                 </div>
               </div>
             </div>
@@ -764,6 +766,7 @@
               </div>
             </div>
           </div>
+        
           <div class="tab-pane fade" id="nav-wednesday" role="tabpanel" aria-labelledby="nav-wednesday-tab">
             <div class="row">
               <div class="col-lg-6">
@@ -1452,6 +1455,7 @@
             <div>
 
               <!-- Nav tabs -->
+            
               <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#contact-us" aria-controls="contact-us" role="tab" data-toggle="tab">Contact-us</a></li>
                 <li role="presentation"><a href="#register" aria-controls="register" role="tab" data-toggle="tab">&nbsp;&nbsp;Register</a></li>
@@ -1473,7 +1477,11 @@
           
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <input type="text" class="form-control" placeholder="Subject">
+                        <!--<input type="text" class="form-control" placeholder="Subject">-->
+                        <select id="subject-select" class="form-control" onchange="show()">
+                          <option value="">Subject</option>
+                        </select>
+                        
                       </div>
                     </div>
           
@@ -1661,10 +1669,102 @@
   <script src="js/main.js"></script>
 
   <script>
-    window.onload = function(){
+    loadDoc("./xml/class_sunday.xml", classXML);
 
+    loadDoc("./json/class_sunday.json", classJSON);
+
+    loadSubject();
+
+function loadDoc(url, cFunction) {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {cFunction(this);}
+  xhttp.open("GET", url);
+  xhttp.send();
+}
+
+function classXML(xmlDoc) {
+  // action goes here
+  console.log("hi");
+  var xmlData = xmlDoc.responseXML;
+  var class_list =  xmlData.getElementsByTagName("class");
+  console.log(class_list);
+  var html_text = " ";
+  for(var i=0;i<class_list.length;i++){
+    var single_page = class_list[i].getElementsByTagName("single-page")[0].childNodes[0].nodeValue;
+    var image = class_list[i].getElementsByTagName("image")[0].childNodes[0].nodeValue;
+    var time = class_list[i].getElementsByTagName("time")[0].childNodes[0].nodeValue;
+    var name = class_list[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
+    var instructor = class_list[i].getElementsByTagName("instructor")[0].childNodes[0].nodeValue;
+    var duration = class_list[i].getElementsByTagName("duration")[0].childNodes[0].nodeValue;
+    console.log(instructor);
+    html_text += ' <div class="class-item d-flex align-items-center">'+
+                  ' <a href="'+single_page+'" class="class-item-thumbnail">'+
+                  '   <img src="'+image+'" alt="Image">'+
+                 '  </a>'+
+                 '  <div class="class-item-text">'+
+                   '  <span>'+time+'/span>'+
+                   '  <h2><a href="'+single_page+'">'+name+'</a></h2>'+
+                   '  <span>By '+instructor+'</span>,'+
+                   '  <span>30 '+duration+'</span>'+
+                 ' </div>'+
+               '  </div>'
+
+  }
+  console.log(html_text);
+  document.getElementById('nav-sunday').children[0].children[0].innerHTML = html_text; 
+}
+
+function classJSON(jsonDoc) {
+  // action goes here
+
+  const jsonData = jsonDoc.responseText;
+  console.log(jsonData);
+  const jsonObj = JSON.parse(jsonData);
+  console.log(jsonObj.classes);
+  var html_text = " ";
+  for(let i in jsonObj.classes){
+    html_text += ' <div class="class-item d-flex align-items-center">'+
+                  ' <a href="'+jsonObj.classes[i]["single-page"]+'" class="class-item-thumbnail">'+
+                  '   <img src="'+jsonObj.classes[i]["image"]+'" alt="Image">'+
+                 '  </a>'+
+                 '  <div class="class-item-text">'+
+                   '  <span>'+jsonObj.classes[i]["time"]+'/span>'+
+                   '  <h2><a href="'+jsonObj.classes[i]["single-page"]+'">'+jsonObj.classes[i]["name"]+'</a></h2>'+
+                   '  <span>By '+jsonObj.classes[i]["instructor"]+'</span>,'+
+                   '  <span>30 '+jsonObj.classes[i]["duration"]+'</span>'+
+                 ' </div>'+
+               '  </div>'
+
+  }
+  document.getElementById('nav-sunday').children[0].children[1].innerHTML = html_text; 
+}
+    
+function loadSubject(){
+  console.log("000000");
+  const select = document.getElementById("subject-select");
+  fetch("./json/contact_subject.json")
+  .then(jsonDoc => jsonDoc.json())
+  .then(jsonObj => {
+    console.log(jsonObj.contactSubject);
+    jsonObj.contactSubject.forEach(job => {
+      console.log(job)
+      const option = document.createElement("option")
+      option.textContent = job;
+      option.value = job;
+      document.getElementById("subject-select")
+      select.appendChild(option);
+    });
+})
+}
+
+function show(){
+  const select = document.getElementById("subject-select");
+  console.log(select.value)
+}
+
+window.onload = function(){
       const contact = document.getElementById("contact-head");
-      contact.innerHTML = "Wooooooow";
+      contact.innerHTML = "Wow";
       
     }
   </script>
