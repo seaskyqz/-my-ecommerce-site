@@ -1465,13 +1465,13 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="contact-us">
-                  <form method="post" data-aos="fade">
+                  <form method="post" action="='test.php" data-aos="fade">
                     <div class="form-group row">
                       <div class="col-md-6 mb-3 mb-lg-0">
-                        <input type="text" class="form-control" placeholder="First name">
+                        <input id="fname" name="fname" type="text" class="form-control" placeholder="First name">
                       </div>
                       <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Last name">
+                        <input id="lname" name="lname" type="text" class="form-control" placeholder="Last name">
                       </div>
                     </div>
           
@@ -1487,7 +1487,7 @@
           
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input id="email" name="email" type="email" class="form-control" placeholder="Email">
                       </div>
                     </div>
                     <div class="form-group row">
@@ -1764,8 +1764,33 @@ window.onload = function(){
     loadDoc("./xml/class_sunday.xml", classXML);
     loadDoc("./json/class_sunday.json", classJSON);
     //loadSubject('./json/class_sunday.json');
-    loadSubject('http:/localhost:4040/subject');
+    //loadSubject('http://')
+    loadSubject('http://localhost:4000/subject');
 
+    }
+      //AJAX function
+      const ajax = async (config)=> {
+        const request = await fatch(config.url,{ 
+          metthod : config.metthod,
+          headers : {  
+                      'Accep' : 'application/json',
+                      'Content-Tpye' : 'application/json'
+                    },
+          body: JSON.stringify(config.data)
+        });
+        const response = await response.json();
+        console.log(response);
+        return response;
+      }
+    function submitContack(){
+      const data = {
+        fname : document.getElementById('fname').value,
+        lname : document.getElementById('lname').values,
+        email : document.getElementById('email').values,
+        subject : document.getElementById('subject-select').values,
+        message : document.getElementById('message').values,
+      }
+      console.log(data);
     }
   </script>
 </body>
