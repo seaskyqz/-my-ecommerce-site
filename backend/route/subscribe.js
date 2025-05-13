@@ -1,10 +1,9 @@
 const express = require('express');
-const { subscribe } = require('./subscribe');
 const router = express.Router();
+
 /*
 
 */
-
 
 router.post('/', (req,res)=>{ 
    const {email}= req.body
@@ -34,7 +33,3 @@ router.post('/', (req,res)=>{
 
    
 });
-
-
-module.exports = router;
-

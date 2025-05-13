@@ -6,11 +6,13 @@ const app = express();
 const PORT = 4000;
 
 app.use(cors());
+app.use(bodyParser.json());
 
 app.use(bodyParser.json());
 
 app.use('/api/subject', require('/routes/subject'));
 //app.use('/api/contact', require('/router/contact'));
+app.use('/api/subcribe', require('./route/subcribe'));
 
 app.listen(PORT,()=>{
     console.log('Server running at http://localhost:'+ PORT);
