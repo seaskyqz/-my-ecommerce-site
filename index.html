@@ -1459,7 +1459,7 @@
               <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#contact-us" aria-controls="contact-us" role="tab" data-toggle="tab">Contact-us</a></li>
                 <li role="presentation"><a href="#register" aria-controls="register" role="tab" data-toggle="tab">&nbsp;&nbsp;Register</a></li>
-                <li role="presentation"><a href="#sing-in" aria-controls="sing-in" role="tab" data-toggle="tab">&nbsp;&nbsp;Sing-in</a></li>
+                <li role="presentation"><a href="#sign-in" aria-controls="sign-in" role="tab" data-toggle="tab">&nbsp;&nbsp;Sign-in</a></li> 
               </ul>
             
               <!-- Tab panes -->
@@ -1492,7 +1492,7 @@
                     </div>
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <textarea class="form-control" id="" cols="30" rows="10"
+                        <textarea class="form-control" id="message" cols="30" rows="10"
                           placeholder="Write your message here."></textarea>
                       </div>
                     </div>
@@ -1614,9 +1614,9 @@
             <h3 class="text-white">Subscribe</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus, odio beatae accusantium.
             </p>
-            <form id="subscribe-from">
+            <form id="subscribe-form">
               <div class="d-flex mb-5">
-                <input type="email" class="form-control rounded-0" placeholder="Email">
+                <input id="subscribe-email" class="form-control rounded-0" placeholder="Email">
                 <input type="submit" class="btn btn-primary rounded-0" value="Subscribe">
               </div>
             </form>
@@ -1672,7 +1672,7 @@
 
 
 function loadDoc(url, cFunction) {
-  const xhttp = new XMLHttpRequest();
+  const xhttp = new XMLHttpRequest();x
   xhttp.onload = function() {cFunction(this);}
   xhttp.open("GET", url);
   xhttp.send();
@@ -1765,21 +1765,21 @@ window.onload = function(){
     loadDoc("./json/class_sunday.json", classJSON);
     //loadSubject('./json/class_sunday.json');
     //loadSubject('http://localhost:4040/');
-    loadSubject('http://localhost:4000/subject');
+    loadSubject('http://localhost:4000/api/subject');
 
     document.getElementById('subscribe-form').addEventListener('click',cbFunction);
 
     }
       //AJAX function
       const ajax = async (config)=> {
-        const request = await fatch(config.url,{ 
-          metthod : config.metthod,
-          headers : {  
-                      'Accep' : 'application/json',
-                      'Content-Tpye' : 'application/json'
-                    },
-          body: JSON.stringify(config.data)
-        });
+       const request = await fetch(config.url, {
+          method : config.method,
+          headers : {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+                   },
+        body: JSON.stringify(config.data)
+      });
         const response = await response.json();
         console.log(response);
         return response;
@@ -1788,18 +1788,20 @@ window.onload = function(){
 
       const data = {
         fname : document.getElementById('fname').value,
-        lname : document.getElementById('lname').values,
-        email : document.getElementById('email').values,
-        subject : document.getElementById('subject-select').values,
-        message : document.getElementById('message').values,
+        lname : document.getElementById('lname').value,
+        email : document.getElementById('email').value,
+        subject : document.getElementById('subject-select').value,
+        message : document.getElementById('message').value,
+
       };
       console.log(data);
 
-      let response = ajex({
-        url : 'http://localhost:4000/api/contract',
+      let response = ajax({
+        const url = 'http://localhost:4000/api/contact',
         method : 'POST',
         data : data
-      });
+    });
+
 
       console.log(response);
     };
@@ -1810,7 +1812,7 @@ window.onload = function(){
       const email = { email : document.getElementById('subscribe-email').value};
       console.log(email);
       const request = await fetch(url, {
-        method : 'PORT',
+        method : 'POST',   
         headers : {'Content-Type': 'application/json'},
         body : JSON.stringify(email)
       });
