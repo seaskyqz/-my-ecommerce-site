@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); 
 
 router.post('/',(reg,res)=>{
     const {fname , lname , email , subject , message} = req.body
