@@ -1,9 +1,14 @@
 const express = require('express');
-const router = express.Router(); 
+const Router = express.Router();
+
 const subject = require('../data/contact_subject.json');
 
-router.get('/', (req, res) => {
-    res.json(subject);
+Router.get('/', (req, res) => {
+
+  res.json(subject); 
 });
 
-module.exports = router;
+module.exports = Router;
+﻿
+
+ 

@@ -1,10 +1,11 @@
 const express = require('express');
-const router = express.Router(); 
+const router = express.Router();
 
-router.post('/',(reg,res)=>{
-    const {fname , lname , email , subject , message} = req.body
-    console.log('content from submited', {fname , lname , email , subject , message});
-    res.status(200).json({status:"Message Recieved"})
-});
+router.post('/', (req, res) => {
+   const{fname,lname,email,subject,message} = req.body;
+   console.log('Content form submited',{fname,lname,email,subject,message});
+   res.status(200).json({status:"Message Recieved"});
+   
+})
 
-module.exports = router
+module.exports = router;
